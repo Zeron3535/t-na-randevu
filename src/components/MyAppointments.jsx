@@ -8,6 +8,7 @@ function MyAppointments() {
   const [success, setSuccess] = useState('');
 
   const fetchAppointments = async () => {
+    // Turkish phone numbers are 11 digits (e.g., 05551234567)
     if (!phone || phone.length !== 11) {
       setError('Lütfen geçerli bir telefon numarası girin (11 haneli)');
       return;

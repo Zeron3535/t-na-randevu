@@ -33,11 +33,14 @@ const staff = [
 let appointments = [];
 
 // Helper function to check if a time slot is available
-function isTimeSlotAvailable(staffId, date, startTime, duration) {
+function isTimeSlotAvailable(staffId, date, startTime, duration, excludeAppointmentId = null) {
   const requestedStart = new Date(`${date}T${startTime}`);
   const requestedEnd = new Date(requestedStart.getTime() + duration * 60000);
 
   return !appointments.some(apt => {
+    // Skip the appointment being updated
+    if (excludeAppointmentId && apt.id === excludeAppointmentId) return false;
+    
     if (apt.staffId !== staffId || apt.date !== date) return false;
     
     const aptStart = new Date(`${apt.date}T${apt.time}`);
@@ -165,18 +168,10 @@ app.put('/api/appointments/:id', (req, res) => {
     const newDate = date || appointment.date;
     const newTime = time || appointment.time;
     
-    // Remove current appointment from check
-    const tempAppointments = appointments.filter(apt => apt.id !== id);
-    appointments = tempAppointments;
-    
-    if (!isTimeSlotAvailable(newStaffId, newDate, newTime, appointment.duration)) {
-      // Restore appointment
-      appointments.push(appointment);
+    // Check availability, excluding the current appointment
+    if (!isTimeSlotAvailable(newStaffId, newDate, newTime, appointment.duration, id)) {
       return res.status(409).json({ error: 'Time slot is not available' });
     }
-    
-    // Restore appointment
-    appointments.push(appointment);
   }
   
   // Update appointment
