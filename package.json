@@ -1,0 +1,28 @@
+{
+  "name": "t-na-randevu",
+  "version": "1.0.0",
+  "description": "Tina Beauty Salon Appointment System - A web application for booking appointments at Tina beauty salon",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": ["appointment", "beauty-salon", "booking-system"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
+    "vite": "^7.1.12"
+  }
+}
